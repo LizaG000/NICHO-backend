@@ -10,8 +10,8 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ../src:/app/src:ro
-      - ../src/infra/postgres/migration/versions:/app/src/infra/postgres/migration/versions:rw
+      - ../user_microservice/src:/app/src:ro
+      - ../user_microservice/src/infra/postgres/migration/versions:/app/src/infra/postgres/migration/versions:rw
 
   database:
     image: postgres:15.2
@@ -21,7 +21,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
     ports:
-      - "5433:5432"
+      - "5400:5432"
 
   pgadmin:
     image: dpage/pgadmin4:latest
