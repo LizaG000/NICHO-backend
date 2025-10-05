@@ -30,7 +30,7 @@ class GetAllGate(Generic[TTable, TEntity], PostgresGateway):
         logger.info(stmt)
         results = (await self.session.execute(stmt)).mappings().fetchall()
         logger.info(results)
-        return [self.schema_type.model_validate(result) for result in results]
+        return [self.schema_type.model_validate(result) for result in results]\
 
 @dataclass(slots=True, kw_only=True)
 class CreateGate(Generic[TTable, TCreate], PostgresGateway):

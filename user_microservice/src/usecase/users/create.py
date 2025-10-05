@@ -12,4 +12,7 @@ class CreateUserUsecase(Usecase[CreateUserSchema, None]):
     
     async def __call__(self, data: CreateUserSchema) -> None:
         async with self.session.begin():
+            # проверка на валидность входящих е-маил, телефон, имени и возраста
+            # поиск пользователей с таким е-маил и почтой
+            # создание записи
             await self.create_user(data)
