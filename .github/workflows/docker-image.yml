@@ -22,7 +22,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -f deploy/Dockerfile -t ghcr.io/user_vicroservice/nicho .
+          docker build -f deploy/Dockerfile -t ghcr.io/lizag000/user_microservice/nicho:pr-${{ github.event.pull_request.number }} .
       - name: Push Docker Image
         run: |
-          docker push ghcr.io/user_vicroservice/nicho
+          docker push ghcr.io/lizag000/user_microservice/nicho:pr-${{ github.event.pull_request.number }}
