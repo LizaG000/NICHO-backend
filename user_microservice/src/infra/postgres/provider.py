@@ -1,10 +1,11 @@
 from collections.abc import AsyncIterator
 from typing import TypeVar, Type
-from dishka import Provider, Scope, provide
+from dishka import Provider, Scope, provide, provide_all
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 from src.config import DatabaseConfig
 from loguru import logger
 from src.infra.postgres.gateways.base import GetAllGate, CreateGate
+from src.infra.postgres.gateways.users import GetUserGate
 
 TTable = TypeVar("TTable")
 TEntity = TypeVar("TEntity")
@@ -59,3 +60,6 @@ class PostgresProvider(Provider):
             table=table,
             create_schema_type=create_schema_type,
         )
+    _get_gateways = provide_all(
+        GetUserGate,
+    )

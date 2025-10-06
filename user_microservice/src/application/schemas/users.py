@@ -4,17 +4,22 @@ from src.application.schemas.common import BaseModel
 
 class UserSchemas(BaseModel):
     id: UUID
-    name: str
-    age: int
+    first_name: str
+    last_name: str
+    middle_name: str
+    birth_date: datetime|None = None
     phone: int
     email: str
-    password: str
+    img:UUID|None = None
     created_at: datetime
     updated_at: datetime
 
 class CreateUserSchema(BaseModel):
-    name: str
-    age: int
+    id: UUID
+    first_name: str
+    last_name: str
+    middle_name: str
+    birth_date: datetime|None = None
     phone: int
     email: str
-    password: str
+    img:UUID|None = None

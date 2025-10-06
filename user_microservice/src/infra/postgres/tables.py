@@ -67,8 +67,8 @@ class UserModel(BaseDBModel):
         DateTime(timezone=True),
         nullable=True
     )
-    phone: Mapped[int] = mapped_column(
-        Integer,
+    phone: Mapped[str] = mapped_column(
+        String ,
         nullable=False
     )
     email: Mapped[str] = mapped_column(
