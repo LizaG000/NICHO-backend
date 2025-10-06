@@ -30,7 +30,7 @@ class GetAllGate(Generic[TTable, TEntity], PostgresGateway):
         logger.info(stmt)
         results = (await self.session.execute(stmt)).mappings().fetchall()
         logger.info(results)
-        return [self.schema_type.model_validate(result) for result in results]\
+        return [self.schema_type.model_validate(result) for result in results]
 
 @dataclass(slots=True, kw_only=True)
 class CreateGate(Generic[TTable, TCreate], PostgresGateway):
@@ -38,5 +38,16 @@ class CreateGate(Generic[TTable, TCreate], PostgresGateway):
     create_schema_type: Type[TCreate]
 
     async def __call__(self, entity: TCreate) -> None:
+        stmt = insert(self.table).values(**entity.model_dump())
+        await self.session.execute(stmt)
+
+
+@dataclass(slots=True, kw_only=True)
+class CreateReturningGate(Generic[TTable, TCreate, TEntity], PostgresGateway):
+    table: Type[TTable]
+    create_schema_type: Type[TCreate]
+    return_schema_type: Type[TEntity]
+
+    async def __call__(self, entity: TCreate) -> TEntity:
         stmt = insert(self.table).values(**entity.model_dump())
         await self.session.execute(stmt)
