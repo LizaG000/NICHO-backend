@@ -12,5 +12,5 @@ RUN poetry config virtualenvs.create false && poetry install --no-interaction --
 
 COPY user_microservice/src /app/src
 
-CMD ["uvicorn", "src.main.web:app", "--host", $USER_MICRO_HOST, "--port", $USER_MICRO_PORT, "--reload"]
+CMD ["sh", "-c", "uvicorn src.main.web:app --host $USER_MICRO_HOST --port $USER_MICRO_PORT --reload"]
 
