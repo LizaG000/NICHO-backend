@@ -23,3 +23,5 @@ class CreateUserSchema(BaseModel):
     phone: int
     email: str
     img:UUID|None = None
+
+
