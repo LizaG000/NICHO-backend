@@ -8,7 +8,7 @@ services:
     environment:
       CONFIG_PATH: /app/configs/config.toml
     ports:
-      - "8000:8000"
+      - "8001:8001"
     volumes:
       - ../user_microservice/src:/app/src:ro
       - ../user_microservice/src/infra/postgres/migration/versions:/app/src/infra/postgres/migration/versions:rw
