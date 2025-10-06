@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI
 from dishka.integrations.fastapi import setup_dishka
 from src.main.config import config
@@ -10,3 +11,5 @@ app = FastAPI(
 
 setup_routes(app, config)
 setup_dishka(container, app)
+
+uvicorn.run("src.main.web:app", host=host, port=port, reload=reload)
