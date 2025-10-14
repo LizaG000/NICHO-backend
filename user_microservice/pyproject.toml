@@ -1,11 +1,11 @@
 [project]
-name = "base-fast-api"
+name = "NiCHO-backend"
 version = "0.1.0"
 description = ""
 authors = [
     {name = "LizaG000",email = "elizaveta.vladimirovna.g@gmail.com"}
 ]
-readme = "README.md"
+
 requires-python = ">=3.10,<4.0"
 dependencies = [
     "annotated-types>=0.7.0",

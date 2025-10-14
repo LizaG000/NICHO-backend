@@ -22,7 +22,6 @@ class GetUserGate(PostgresGateway):
 
     async def __call__(self, login: UserLoginSchemas) -> list[UserSchemas]|None:
         stmt = Select(*UserModel.group_by_fields()).where(UserModel.email == login.email or UserModel.phone == login.phone)
-        logger.info(stmt)
         results = (await self.session.execute(stmt)).mappings().fetchall()
         logger.info(results)
         if results == []:
