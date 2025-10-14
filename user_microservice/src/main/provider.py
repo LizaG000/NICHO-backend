@@ -10,7 +10,8 @@ from src.config import ApiConfig
 from src.config import DatabaseConfig
 
 from src.usecase.users.create import CreateUserUsecase
-from src.usecase.users.get_all import GetUsersUsecase
+from src.usecase.addresses.create import CreateAddressUsecase
+from src.usecase.addresses.get_all import GetUsersUsecase
 
 class MainProvider(Provider):
     scope = Scope.REQUEST
@@ -30,5 +31,6 @@ class MainProvider(Provider):
     _get_usecases = provide_all(
         CreateUserUsecase,
         GetUsersUsecase,
+        CreateAddressUsecase,
     )
 
