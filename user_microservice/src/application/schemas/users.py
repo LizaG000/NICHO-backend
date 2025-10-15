@@ -24,4 +24,11 @@ class CreateUserSchema(BaseModel):
     email: str
     img:UUID|None = None
 
+class UpdateUserSchema(BaseModel):
+    first_name: str
+    last_name: str
+    middle_name: str
+    img:UUID|None = None
+    updated_at: datetime
+
 
