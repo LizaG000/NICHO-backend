@@ -2,7 +2,7 @@ from uuid import UUID
 from datetime import datetime
 from src.application.schemas.common import BaseModel
 
-class UserSchemas(BaseModel):
+class UserSchema(BaseModel):
     id: UUID
     first_name: str
     last_name: str
@@ -23,5 +23,12 @@ class CreateUserSchema(BaseModel):
     phone: int
     email: str
     img:UUID|None = None
+
+class UpdateUserSchema(BaseModel):
+    first_name: str
+    last_name: str
+    middle_name: str
+    img:UUID|None = None
+    updated_at: datetime
 
 

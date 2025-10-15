@@ -33,7 +33,16 @@ class DatabaseCreateError(BaseError):
         table: BaseDBModel,
         status_code: int = status.HTTP_422_UNPROCESSABLE_ENTITY,
     ):
-        super().__init__(f"Ошибка при создании записи в модель {table.__tablename__}", status_code)
+        super().__init__(f"Ошибка при создании записи в модель: {table.__tablename__}", status_code)
+
+class DatabaseUpdateError(BaseError):
+    def __init__(
+        self,
+        table: BaseDBModel,
+        status_code: int = status.HTTP_409_CONFLICT,
+    ):
+        super().__init__(f"Ошибка при обновлении записи в моделе: {table.__tablename__}", status_code)
+
 
 class NotFoundError(BaseError):
     def __init__(

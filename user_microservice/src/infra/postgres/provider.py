@@ -6,12 +6,16 @@ from src.config import DatabaseConfig
 from loguru import logger
 from src.infra.postgres.gateways.base import GetAllByIdUserGate, CreateGate
 from src.infra.postgres.gateways.base import CreateReturningGate
+from src.infra.postgres.gateways.base import GetByIdGate
+from src.infra.postgres.gateways.base import UpdateGate
+from src.infra.postgres.gateways.base import UpdateReturningGate
 from src.infra.postgres.gateways.users import GetUserGate
 from src.infra.postgres.gateways.address import GetAddressGate
 
 TTable = TypeVar("TTable")
 TEntity = TypeVar("TEntity")
 TCreate = TypeVar("TCreate")
+TUpdate = TypeVar("TUpdate")
 TEntityId = TypeVar("TEntityId")
 
 
@@ -53,6 +57,22 @@ class PostgresProvider(Provider):
             entity_id=entity_id,
         )
 
+
+    @provide
+    async def _get_by_id_gate(
+        self,
+        table: Type[TTable],
+        entity_id: Type[TEntityId],
+        schema_type: Type[TEntity],
+        session: AsyncSession,
+    ) -> GetByIdGate[TTable, TEntityId, TEntity]:
+        return GetByIdGate(
+            session=session,
+            table=table,
+            entity_id=entity_id,
+            schema_type=schema_type,
+        )
+
     @provide
     async def _create_gate(
         self,
@@ -78,6 +98,39 @@ class PostgresProvider(Provider):
             session=session,
             table=table,
             create_schema_type=create_schema_type,
+            schema_type=schema_type,
+        )
+
+
+    @provide
+    async def _update_gate(
+        self,
+        table: Type[TTable],
+        create_schema_type: Type[TCreate],
+        entity_id: Type[TEntityId],
+        session: AsyncSession,
+    ) -> UpdateGate[TTable, TCreate, TEntityId]:
+        return UpdateGate(
+            session=session,
+            table=table,
+            create_schema_type=create_schema_type,
+            entity_id=entity_id,
+        )
+
+    @provide
+    async def _update_returning_gate(
+        self,
+        table: Type[TTable],
+        create_schema_type: Type[TCreate],
+        entity_id: Type[TEntityId],
+        schema_type: Type[TEntity],
+        session: AsyncSession,
+    ) -> UpdateReturningGate[TTable, TCreate, TEntityId, TEntity]:
+        return UpdateReturningGate(
+            session=session,
+            table=table,
+            create_schema_type=create_schema_type,
+            entity_id=entity_id,
             schema_type=schema_type,
         )
 

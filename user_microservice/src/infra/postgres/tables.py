@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy import UUID
 from sqlalchemy import String
 from sqlalchemy import Integer
+from sqlalchemy import BigInteger
 from sqlalchemy import DateTime
 from sqlalchemy import func
 from sqlalchemy import ForeignKey
@@ -67,8 +68,8 @@ class UserModel(BaseDBModel):
         DateTime(timezone=True),
         nullable=True
     )
-    phone: Mapped[str] = mapped_column(
-        String ,
+    phone: Mapped[int] = mapped_column(
+        BigInteger ,
         nullable=False
     )
     email: Mapped[str] = mapped_column(

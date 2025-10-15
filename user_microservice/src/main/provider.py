@@ -10,6 +10,8 @@ from src.config import ApiConfig
 from src.config import DatabaseConfig
 
 from src.usecase.users.create import CreateUserUsecase
+from src.usecase.users.update import UpdateUserUsecase
+from src.usecase.users.get import GetUserUsecase
 from src.usecase.addresses.create import CreateAddressUsecase
 from src.usecase.addresses.get_all import GetAddressesUsecase
 
@@ -32,5 +34,7 @@ class MainProvider(Provider):
         CreateUserUsecase,
         GetAddressesUsecase,
         CreateAddressUsecase,
+        UpdateUserUsecase,
+        GetUserUsecase,
     )
 
