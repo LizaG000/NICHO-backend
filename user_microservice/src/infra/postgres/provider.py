@@ -9,6 +9,8 @@ from src.infra.postgres.gateways.base import CreateReturningGate
 from src.infra.postgres.gateways.base import GetByIdGate
 from src.infra.postgres.gateways.base import UpdateGate
 from src.infra.postgres.gateways.base import UpdateReturningGate
+from src.infra.postgres.gateways.base import DeleteGate
+from src.infra.postgres.gateways.base import DeleteReturningGate
 from src.infra.postgres.gateways.users import GetUserGate
 from src.infra.postgres.gateways.address import GetAddressGate
 
@@ -106,14 +108,14 @@ class PostgresProvider(Provider):
     async def _update_gate(
         self,
         table: Type[TTable],
-        create_schema_type: Type[TCreate],
+        update_schema_type: Type[TUpdate],
         entity_id: Type[TEntityId],
         session: AsyncSession,
-    ) -> UpdateGate[TTable, TCreate, TEntityId]:
+    ) -> UpdateGate[TTable, TUpdate, TEntityId]:
         return UpdateGate(
             session=session,
             table=table,
-            create_schema_type=create_schema_type,
+            update_schema_type=update_schema_type,
             entity_id=entity_id,
         )
 
@@ -121,15 +123,44 @@ class PostgresProvider(Provider):
     async def _update_returning_gate(
         self,
         table: Type[TTable],
-        create_schema_type: Type[TCreate],
+        update_schema_type: Type[TUpdate],
         entity_id: Type[TEntityId],
         schema_type: Type[TEntity],
         session: AsyncSession,
-    ) -> UpdateReturningGate[TTable, TCreate, TEntityId, TEntity]:
+    ) -> UpdateReturningGate[TTable, TUpdate, TEntityId, TEntity]:
         return UpdateReturningGate(
             session=session,
             table=table,
-            create_schema_type=create_schema_type,
+            update_schema_type=update_schema_type,
+            entity_id=entity_id,
+            schema_type=schema_type,
+        )
+
+
+    @provide
+    async def _delete_gate(
+        self,
+        table: Type[TTable],
+        entity_id: Type[TEntityId],
+        session: AsyncSession,
+    ) -> DeleteGate[TTable, TEntityId]:
+        return DeleteGate(
+            session=session,
+            table=table,
+            entity_id=entity_id,
+        )
+
+    @provide
+    async def _delete_returning_gate(
+        self,
+        table: Type[TTable],
+        entity_id: Type[TEntityId],
+        schema_type: Type[TEntity],
+        session: AsyncSession,
+    ) -> DeleteReturningGate[TTable, TEntityId, TEntity]:
+        return DeleteReturningGate(
+            session=session,
+            table=table,
             entity_id=entity_id,
             schema_type=schema_type,
         )
