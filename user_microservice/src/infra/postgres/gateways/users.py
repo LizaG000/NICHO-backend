@@ -10,7 +10,7 @@ from sqlalchemy.sql.dml import ReturningInsert, ReturningUpdate
 from typing import TypeVar, Generic, Type
 from src.infra.postgres.tables import UserModel
 from src.usecase.users.schemas import UserLoginSchemas
-from src.application.schemas.users import UserSchemas
+from src.application.schemas.users import UserSchema
 
 
 @dataclass(slots=True, kw_only=True)
@@ -20,11 +20,11 @@ class PostgresGateway:
 @dataclass(slots=True, kw_only=True)
 class GetUserGate(PostgresGateway):
 
-    async def __call__(self, login: UserLoginSchemas) -> list[UserSchemas]|None:
+    async def __call__(self, login: UserLoginSchemas) -> list[UserSchema]|None:
         stmt = Select(*UserModel.group_by_fields()).where(UserModel.email == login.email or UserModel.phone == login.phone)
         results = (await self.session.execute(stmt)).mappings().fetchall()
         logger.info(results)
         if results == []:
             return None
-        return [UserSchemas.model_validate(result) for result in results]
+        return [UserSchema.model_validate(result) for result in results]
  

@@ -2,7 +2,7 @@ from uuid import UUID
 from datetime import datetime
 from src.application.schemas.common import BaseModel
 
-class UserSchemas(BaseModel):
+class UserSchema(BaseModel):
     id: UUID
     first_name: str
     last_name: str
