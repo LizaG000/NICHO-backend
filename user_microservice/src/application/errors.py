@@ -43,6 +43,13 @@ class DatabaseUpdateError(BaseError):
     ):
         super().__init__(f"Ошибка при обновлении записи в моделе: {table.__tablename__}", status_code)
 
+class DatabaseDeleteError(BaseError):
+    def __init__(
+        self,
+        table: BaseDBModel,
+        status_code: int = status.HTTP_400_BAD_REQUEST,
+    ):
+        super().__init__(f"Ошибка при удалении записи в моделе: {table.__tablename__}", status_code)
 
 class NotFoundError(BaseError):
     def __init__(

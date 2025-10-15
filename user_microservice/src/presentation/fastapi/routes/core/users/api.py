@@ -9,7 +9,7 @@ from src.usecase.users.update import UpdateUserUsecase
 from src.usecase.users.get import GetUserUsecase
 from src.usecase.users.schemas import CreateUserSchema, UpdateUserSchema, UpdateUserUscaseSchema
 
-ROUTER = APIRouter(route_class=DishkaRoute)
+ROUTER = APIRouter(route_class=DishkaRoute, tags=["Users"])
 
 @ROUTER.post('', status_code=status.HTTP_200_OK)
 async def create_users(
