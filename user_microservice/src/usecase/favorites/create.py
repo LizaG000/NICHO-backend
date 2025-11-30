@@ -19,8 +19,6 @@ class CreateFavoritesUsecase(Usecase[GetCreateFavoritesSchema, FavoriteSchema]):
         async with self.session.begin():
             if self.auth.role == 1:
                 raise ForbiddenError("Customer или Admin", "Designer")
-            elif data.id_user != self.auth.sub and self.auth.role != 2:
-                raise UnauthorizedError()
             return await self.create_favorites(CreateFavoriteSchema(
                 id_user=self.auth.sub,
                 id_product=data.id_product
