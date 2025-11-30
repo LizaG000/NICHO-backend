@@ -58,3 +58,23 @@ class NotFoundError(BaseError):
         status_code: int = status.HTTP_404_NOT_FOUND,
     ):
         super().__init__(f"В {table.__tablename__} запись не найдена", status_code)
+class ForbiddenError(BaseError):
+    def __init__(
+        self,
+        required_roles: list[str],
+        user_role: str,
+        status_code: int = status.HTTP_403_FORBIDDEN,
+    ):
+        message = (
+            f"Недостаточно прав. Требуемые роли: {', '.join(required_roles)}. "
+            f"Ваша роль: {user_role}"
+        )
+        super().__init__(message, status_code)
+
+class UnauthorizedError(BaseError):
+    def __init__(
+        self,
+        message: str = "Требуется авторизация",
+        status_code: int = status.HTTP_401_UNAUTHORIZED,
+    ):
+        super().__init__(message, status_code)

@@ -4,7 +4,7 @@ from sqlalchemy import UUID
 from sqlalchemy import String
 from sqlalchemy import Integer
 from sqlalchemy import BigInteger
-from sqlalchemy import DateTime
+from sqlalchemy import DateTime, Date
 from sqlalchemy import func
 from sqlalchemy import ForeignKey
 from sqlalchemy import Float
@@ -65,7 +65,7 @@ class UserModel(BaseDBModel):
         nullable=False,
     )
     birth_date: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True),
+        Date,
         nullable=True
     )
     phone: Mapped[int] = mapped_column(

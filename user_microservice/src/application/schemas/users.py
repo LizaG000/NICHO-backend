@@ -1,5 +1,5 @@
 from uuid import UUID
-from datetime import datetime
+from datetime import datetime, date
 from src.application.schemas.common import BaseModel
 
 class UserSchema(BaseModel):
@@ -7,7 +7,7 @@ class UserSchema(BaseModel):
     first_name: str
     last_name: str
     middle_name: str
-    birth_date: datetime|None = None
+    birth_date: date|None = None
     phone: int
     email: str
     img:UUID|None = None
@@ -19,7 +19,7 @@ class CreateUserSchema(BaseModel):
     first_name: str
     last_name: str
     middle_name: str
-    birth_date: datetime|None = None
+    birth_date: date|None = None
     phone: int
     email: str
     img:UUID|None = None

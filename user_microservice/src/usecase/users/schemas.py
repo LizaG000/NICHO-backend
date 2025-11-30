@@ -24,10 +24,6 @@ class UpdateUserSchema(BaseModel):
             raise ValueError("Имя может содержать только буквы (латиница или кириллица) и дефис.")
         return value.capitalize()
 
-class UpdateUserUscaseSchema(BaseModel):
-    id: UUID
-    user: UpdateUserSchema
-
 
 class CreateUserSchema(BaseModel):
     id: UUID
