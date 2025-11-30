@@ -54,15 +54,15 @@ class UserModel(BaseDBModel):
     id: Mapped[uuid_pk]
     first_name: Mapped[str] = mapped_column(
         String(255),
-        nullable=False,
+        nullable=True,
     )
     last_name: Mapped[str] = mapped_column(
         String(255),
-        nullable=False,
+        nullable=True,
     )
     middle_name: Mapped[str] = mapped_column(
         String(255),
-        nullable=False,
+        nullable=True,
     )
     birth_date: Mapped[datetime] = mapped_column(
         Date,
