@@ -21,7 +21,6 @@ class PostgresGateway:
 class GetAddressGate(PostgresGateway):
 
     async def __call__(self, address: CreateAddressSchema) -> AddressSchema | None:
-        logger.info((address))
         stmt = Select(*AddressesModel.group_by_fields()).where(
             (AddressesModel.id_user == address.id_user) &
             (AddressesModel.country == address.country) &
@@ -33,7 +32,6 @@ class GetAddressGate(PostgresGateway):
             (AddressesModel.postal_code == address.postal_code)
         )
         results = (await self.session.execute(stmt)).mappings().fetchone()
-        logger.info(results)
         if results is None:
             return None
         return AddressSchema.model_validate(results)

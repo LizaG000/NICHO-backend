@@ -10,3 +10,7 @@ class BaseSchema(BaseModel):
         from_attributes=True,
         arbitrary_types_allowed=True,
     )
+
+class PaginationSchema(BaseSchema):
+    limit: int
+    offset: int

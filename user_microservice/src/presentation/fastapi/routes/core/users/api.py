@@ -7,7 +7,7 @@ from src.application.schemas.users import UserSchema
 from src.usecase.users.create import CreateUserUsecase
 from src.usecase.users.update import UpdateUserUsecase
 from src.usecase.users.get import GetUserUsecase
-from src.usecase.users.schemas import CreateUserSchema, UpdateUserSchema, UpdateUserUscaseSchema
+from src.usecase.users.schemas import CreateUserSchema, UpdateUserSchema
 
 ROUTER = APIRouter(route_class=DishkaRoute, tags=["Users"])
 
@@ -20,12 +20,10 @@ async def create_users(
 @ROUTER.patch('', status_code=status.HTTP_200_OK)
 async def update_users(
     usecase: FromDishka[UpdateUserUsecase],
-    id: UUID,
     user: UpdateUserSchema) -> UserSchema:
-    return await usecase(UpdateUserUscaseSchema(id=id, user=user))
+    return await usecase(user)
 
 @ROUTER.get('', status_code=status.HTTP_200_OK)
 async def get_user(
-    usecase: FromDishka[GetUserUsecase],
-    id: UUID) -> UserSchema:
-    return await usecase(id=id)
+    usecase: FromDishka[GetUserUsecase],) -> UserSchema:
+    return await usecase()

@@ -18,9 +18,8 @@ async def create_address(
 
 @ROUTER.get('', status_code=status.HTTP_200_OK)
 async def get_addresses_by_user(
-    usecase: FromDishka[GetAddressesUsecase],
-    id_user: UUID) -> list[AddressSchema]:
-    return await usecase(id_user)
+    usecase: FromDishka[GetAddressesUsecase],) -> list[AddressSchema]:
+    return await usecase()
 
 
 @ROUTER.delete('', status_code=status.HTTP_200_OK)
