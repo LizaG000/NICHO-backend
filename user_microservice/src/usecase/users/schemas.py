@@ -27,9 +27,9 @@ class UpdateUserSchema(BaseModel):
 
 class CreateUserSchema(BaseModel):
     id: UUID
-    first_name: str
-    last_name: str
-    middle_name: str
+    first_name: str | None = None
+    last_name: str | None = None
+    middle_name: str | None = None
     birth_date: datetime | None = None
     phone: int
     email: EmailStr
