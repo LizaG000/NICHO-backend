@@ -1,6 +1,6 @@
 import re
 from uuid import UUID
-from datetime import datetime, date, timedelta, timezone
+from datetime import datetime, date, timedelta, timezone,date
 from pydantic import EmailStr, field_validator
 from src.application.schemas.common import BaseModel
 
@@ -12,6 +12,7 @@ class UpdateUserSchema(BaseModel):
     first_name: str | None = None
     last_name: str | None = None
     middle_name: str | None = None
+    birth_date: date | None = None
     img: UUID | None = None
     updated_at: datetime | None = datetime.now(tz=timezone(timedelta(hours=3)))
 
@@ -30,7 +31,7 @@ class CreateUserSchema(BaseModel):
     first_name: str | None = None
     last_name: str | None = None
     middle_name: str | None = None
-    birth_date: datetime | None = None
+    birth_date: date | None = None
     phone: int
     email: EmailStr
     img: UUID | None = None
@@ -53,7 +54,7 @@ class CreateUserSchema(BaseModel):
 
     @field_validator("birth_date")
     @classmethod
-    def validate_birth_date(cls, value: datetime | None) -> datetime | None:
+    def validate_birth_date(cls, value: date | None) -> date | None:
         if value is None:
             return value
         today = date.today()
