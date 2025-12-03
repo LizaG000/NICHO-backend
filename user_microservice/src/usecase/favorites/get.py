@@ -22,11 +22,9 @@ class GetFavoritesUsecase(Usecase[PaginationSchema, ReturnPaginationSchema]):
         async with self.session.begin():
             favorites =  await self.get_favorites(id_user=self.auth.sub)
             async with httpx.AsyncClient(timeout=30.0) as client:
-                params = { "ids": [str(favorites[i].id_product) for i in range(data.offset, data.offset+data.limit)]}
-                logger.info(params)
+                params = { "ids": [str(favorites[i].id_product) for i in range(data.offset, min(data.offset+data.limit, len(favorites)))]}
                 responses = await client.post("http://nicho-designer.tw1.ru/subproducts/get-by-id-list", json=params)
                 r = responses.json()
-                print(r)
                 return ReturnPaginationSchema(
                     count=len(favorites),
                     items=[ReturnProductSchema.model_validate(response) for response in r])
