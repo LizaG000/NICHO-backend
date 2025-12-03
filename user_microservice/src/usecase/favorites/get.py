@@ -21,7 +21,7 @@ class GetFavoritesUsecase(Usecase[PaginationSchema, None]):
         async with self.session.begin():
             favorites =  await self.get_favorites(id_user=self.auth.sub)
             async with httpx.AsyncClient(timeout=30.0) as client:
-                params = { "ids": [str(favorites[i].id) for i in range(data.offset, data.offset+data.limit)]}
+                params = { "ids": [str(favorites[i].id_product) for i in range(data.offset, data.offset+data.limit)]}
                 logger.info(params)
                 response = await client.post("http://nicho-designer.tw1.ru/subproducts/get-by-id-list", json=params)
                 logger.info(response)
