@@ -23,33 +23,15 @@ jobs:
           username: ${{ secrets.GHCR_USERNAME }}
           password: ${{ secrets.GHCR_TOKEN }}
 
-      - name: Set Docker tags
-        id: meta
-        uses: docker/metadata-action@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
         with:
-          images: ghcr.io/lizag000/user_microservice/nicho
+          context: .
+          file: deploy/Dockerfile
+          push: true
           tags: |
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=sha,prefix={{branch}}-
-            latest
-
-      - name: Build Docker Image
-        run: |
-          docker build -f deploy/Dockerfile \
-            -t ghcr.io/lizag000/user_microservice/nicho:latest \
-            -t ghcr.io/lizag000/user_microservice/nicho:${{ github.sha }} \
-            .
-
-      - name: Push Docker Image
-        run: |
-          # Всегда пушим latest
-          docker push ghcr.io/lizag000/user_microservice/nicho:latest
-          
-          # Для PR пушим дополнительный тег
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            docker push ghcr.io/lizag000/user_microservice/nicho:pr-${{ github.event.pull_request.number }}
-          else
-            docker push ghcr.io/lizag000/user_microservice/nicho:${{ github.sha }}
-          fi
+            ghcr.io/lizag000/user_microservice/nicho:latest
+            ${{ github.event_name == 'pull_request' && format('ghcr.io/lizag000/user_microservice/nicho:pr-{0}', github.event.number) || format('ghcr.io/lizag000/user_microservice/nicho:{0}', github.sha) }}
