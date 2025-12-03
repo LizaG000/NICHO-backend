@@ -1,7 +1,10 @@
-name: Build Docker Image on PR
+name: Build Docker Image
 
 on:
   pull_request:
+    branches:
+      - main
+  push:
     branches:
       - main
 
@@ -20,9 +23,33 @@ jobs:
           username: ${{ secrets.GHCR_USERNAME }}
           password: ${{ secrets.GHCR_TOKEN }}
 
+      - name: Set Docker tags
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/lizag000/user_microservice/nicho
+          tags: |
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,prefix={{branch}}-
+            latest
+
       - name: Build Docker Image
         run: |
-          docker build -f deploy/Dockerfile -t ghcr.io/lizag000/user_microservice/nicho:pr-${{ github.event.pull_request.number }} .
+          docker build -f deploy/Dockerfile \
+            -t ghcr.io/lizag000/user_microservice/nicho:latest \
+            -t ghcr.io/lizag000/user_microservice/nicho:${{ github.sha }} \
+            .
+
       - name: Push Docker Image
         run: |
-          docker push ghcr.io/lizag000/user_microservice/nicho:pr-${{ github.event.pull_request.number }}
+          # Всегда пушим latest
+          docker push ghcr.io/lizag000/user_microservice/nicho:latest
+          
+          # Для PR пушим дополнительный тег
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            docker push ghcr.io/lizag000/user_microservice/nicho:pr-${{ github.event.pull_request.number }}
+          else
+            docker push ghcr.io/lizag000/user_microservice/nicho:${{ github.sha }}
+          fi
