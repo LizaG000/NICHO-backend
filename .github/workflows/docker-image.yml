@@ -1,7 +1,10 @@
-name: Build Docker Image on PR
+name: Build Docker Image
 
 on:
   pull_request:
+    branches:
+      - main
+  push:
     branches:
       - main
 
@@ -20,9 +23,15 @@ jobs:
           username: ${{ secrets.GHCR_USERNAME }}
           password: ${{ secrets.GHCR_TOKEN }}
 
-      - name: Build Docker Image
-        run: |
-          docker build -f deploy/Dockerfile -t ghcr.io/lizag000/user_microservice/nicho:pr-${{ github.event.pull_request.number }} .
-      - name: Push Docker Image
-        run: |
-          docker push ghcr.io/lizag000/user_microservice/nicho:pr-${{ github.event.pull_request.number }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: deploy/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/lizag000/user_microservice/nicho:latest
+            ${{ github.event_name == 'pull_request' && format('ghcr.io/lizag000/user_microservice/nicho:pr-{0}', github.event.number) || format('ghcr.io/lizag000/user_microservice/nicho:{0}', github.sha) }}
