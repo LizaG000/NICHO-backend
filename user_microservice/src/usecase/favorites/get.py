@@ -9,22 +9,26 @@ from dataclasses import dataclass
 from src.application.schemas.auth import AuthSchema
 from src.application.schemas.common import PaginationSchema
 from loguru import logger
+from src.usecase.favorites.schemas import ReturnProductSchema, ReturnPaginationSchema
 
 
 @dataclass(slots=True, frozen=True, kw_only=True)
-class GetFavoritesUsecase(Usecase[PaginationSchema, None]):
+class GetFavoritesUsecase(Usecase[PaginationSchema, ReturnPaginationSchema]):
     session: AsyncSession
     auth: AuthSchema
     get_favorites: GetAllByIdUserGate[FavoritesModel, FavoriteSchema, UUID]
 
-    async def __call__(self, data: PaginationSchema) -> None:
+    async def __call__(self, data: PaginationSchema) -> ReturnPaginationSchema:
         async with self.session.begin():
             favorites =  await self.get_favorites(id_user=self.auth.sub)
             async with httpx.AsyncClient(timeout=30.0) as client:
                 params = { "ids": [str(favorites[i].id_product) for i in range(data.offset, data.offset+data.limit)]}
                 logger.info(params)
-                response = await client.post("http://nicho-designer.tw1.ru/subproducts/get-by-id-list", json=params)
-                logger.info(response)
-                logger.info(response.text)
+                responses = await client.post("http://nicho-designer.tw1.ru/subproducts/get-by-id-list", json=params)
+                r = responses.json()
+                print(r)
+                return ReturnPaginationSchema(
+                    count=len(favorites),
+                    items=[ReturnProductSchema.model_validate(response) for response in r])
 
 
