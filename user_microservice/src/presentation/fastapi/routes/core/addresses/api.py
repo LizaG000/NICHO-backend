@@ -10,19 +10,19 @@ from src.application.schemas.addresses import CreateAddressSchema, AddressSchema
 
 ROUTER = APIRouter(route_class=DishkaRoute, tags=["Addresses"])
 
-@ROUTER.post('', status_code=status.HTTP_200_OK)
+@ROUTER.post('', status_code=status.HTTP_200_OK, response_model=AddressSchema)
 async def create_address(
     usecase: FromDishka[CreateAddressUsecase],
     address: CreateAddressSchema) -> AddressSchema:
     return await usecase(address)
 
-@ROUTER.get('', status_code=status.HTTP_200_OK)
+@ROUTER.get('', status_code=status.HTTP_200_OK, response_model=list[AddressSchema])
 async def get_addresses_by_user(
     usecase: FromDishka[GetAddressesUsecase],) -> list[AddressSchema]:
     return await usecase()
 
 
-@ROUTER.delete('', status_code=status.HTTP_200_OK)
+@ROUTER.delete('', status_code=status.HTTP_200_OK, response_model=AddressSchema)
 async def delete_address_by_user(
     usecase: FromDishka[DeleteAddressesUsecase],
     id: UUID) -> AddressSchema:
