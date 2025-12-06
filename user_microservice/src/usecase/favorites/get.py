@@ -30,6 +30,7 @@ class GetFavoritesUsecase(Usecase[PaginationSchema, ReturnPaginationSchema]):
                 for i in range(0, len(items)):
                     items[i].subProductSizes = favorites[i+data.offset].size
                     items[i].productId = favorites[i+data.offset].id
+                print(items[0])
                 return ReturnPaginationSchema(
                     count=len(favorites),
                     items=items)
