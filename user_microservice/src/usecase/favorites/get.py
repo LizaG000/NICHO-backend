@@ -27,6 +27,10 @@ class GetFavoritesUsecase(Usecase[PaginationSchema, ReturnPaginationSchema]):
                 r = responses.json()
                 logger.info(r)
                 logger.info(r.text)
+                items = [ReturnProductSchema.model_validate(response) for response in r]
+                for i in range(0, len(items)):
+                    items[i].subProductSizes = favorites[i+data.offset].size
+                    items[i].productId = favorites[i+data.offset].id
                 return ReturnPaginationSchema(
                     count=len(favorites),
                     items=[ReturnProductSchema.model_validate(response) for response in r])

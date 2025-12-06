@@ -137,6 +137,11 @@ class FavoritesModel(BaseDBModel):
         UUID,
         nullable=False
     )
+    size: Mapped[str] = mapped_column(
+        String,
+        default="XS",
+        nullable=True
+    )
     created_at: Mapped[created_at]
     updated_at: Mapped[updated_at]
 
