@@ -24,17 +24,17 @@ class ReturnProductSchema(BaseModel):
     productId: UUID
     price: float
     product: ProductSchema
-    photo: list[str] = Field(
+    photos: list[str] = Field(
         validation_alias="subProductPhotos",
         default_factory=list
     )
     subProductSizes: list[dict] | str| None = None
 
-    @field_validator('subProductPhotos', mode='before')
+    @field_validator('photos', mode='before')
     @classmethod
     def extract_photo_refs(cls, v):
         """Преобразуем список словарей в список строк photoRef"""
-        if not v:
+        if not v or v == []:
             return []
 
         if isinstance(v, list) and v and isinstance(v[0], dict):
