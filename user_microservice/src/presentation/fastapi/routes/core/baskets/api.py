@@ -7,6 +7,9 @@ from src.application.schemas.baskets import CreateBasketSchema, BasketSchema, Up
 from src.usecase.baskets.create import CreateBasketUsecase
 from src.usecase.baskets.update import UpdateBasketUsecase
 from src.usecase.baskets.delete import DeleteBasketUsecase
+from src.usecase.baskets.get import GetBasketUsecase
+from src.usecase.favorites.schemas import ReturnPaginationSchema
+from src.application.schemas.common import PaginationSchema
 
 ROUTER = APIRouter(route_class=DishkaRoute, tags=["Baskets"])
 
@@ -26,4 +29,11 @@ async def update_basket(
 async def delete_basket(
     usecase: FromDishka[DeleteBasketUsecase],
     data: UUID) -> BasketSchema:
+    return await usecase(data=data)
+
+
+@ROUTER.get('', status_code=status.HTTP_200_OK, response_model=ReturnPaginationSchema)
+async def get_favorites(
+    usecase: FromDishka[GetBasketUsecase],
+    data: PaginationSchema = Query()) -> ReturnPaginationSchema:
     return await usecase(data=data)
