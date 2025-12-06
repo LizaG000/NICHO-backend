@@ -21,6 +21,7 @@ from src.usecase.favorites.delete import DeleteFavoritesUsecase
 from src.usecase.baskets.create import CreateBasketUsecase
 from src.usecase.baskets.update import UpdateBasketUsecase
 from src.usecase.baskets.delete import DeleteBasketUsecase
+from src.usecase.baskets.get import GetBasketUsecase
 
 class MainProvider(Provider):
     scope = Scope.REQUEST
@@ -50,5 +51,6 @@ class MainProvider(Provider):
         CreateBasketUsecase,
         UpdateBasketUsecase,
         DeleteBasketUsecase,
+        GetBasketUsecase,
     )
 
