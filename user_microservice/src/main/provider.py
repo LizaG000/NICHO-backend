@@ -18,6 +18,9 @@ from src.usecase.addresses.delete import DeleteAddressesUsecase
 from src.usecase.favorites.create import CreateFavoritesUsecase
 from src.usecase.favorites.get import GetFavoritesUsecase
 from src.usecase.favorites.delete import DeleteFavoritesUsecase
+from src.usecase.baskets.create import CreateBasketUsecase
+from src.usecase.baskets.update import UpdateBasketUsecase
+from src.usecase.baskets.delete import DeleteBasketUsecase
 
 class MainProvider(Provider):
     scope = Scope.REQUEST
@@ -44,5 +47,8 @@ class MainProvider(Provider):
         CreateFavoritesUsecase,
         GetFavoritesUsecase,
         DeleteFavoritesUsecase,
+        CreateBasketUsecase,
+        UpdateBasketUsecase,
+        DeleteBasketUsecase,
     )
 
