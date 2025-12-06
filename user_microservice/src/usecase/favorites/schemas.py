@@ -25,6 +25,8 @@ class ReturnProductSchema(BaseModel):
     price: float
     product: ProductSchema
     subProductPhotos: list[str]
+    subProductSizes: list[dict] | str| None = None
+
 
 class ReturnPaginationSchema(BaseModel):
     count: int
