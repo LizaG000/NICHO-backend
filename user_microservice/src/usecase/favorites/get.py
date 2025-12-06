@@ -33,6 +33,6 @@ class GetFavoritesUsecase(Usecase[PaginationSchema, ReturnPaginationSchema]):
                     items[i].productId = favorites[i+data.offset].id
                 return ReturnPaginationSchema(
                     count=len(favorites),
-                    items=[ReturnProductSchema.model_validate(response) for response in r])
+                    items=items)
 
 
