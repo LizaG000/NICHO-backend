@@ -139,8 +139,8 @@ class FavoritesModel(BaseDBModel):
     )
     created_at: Mapped[created_at]
     updated_at: Mapped[updated_at]
-    
-class BasketsModel(BaseDBModel):
+
+class BasketModel(BaseDBModel):
     __tablename__ = 'baskets'
     id: Mapped[uuid_pk]
     id_user: Mapped[uuid.UUID] = mapped_column(
@@ -161,7 +161,7 @@ class BasketsModel(BaseDBModel):
     size: Mapped[str] = mapped_column(
         String,
         default="XS",
-        nullable=False
+        nullable=True
     )
     created_at: Mapped[created_at]
     updated_at: Mapped[updated_at]
