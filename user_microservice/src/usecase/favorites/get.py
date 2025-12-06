@@ -26,7 +26,6 @@ class GetFavoritesUsecase(Usecase[PaginationSchema, ReturnPaginationSchema]):
                 responses = await client.post("http://nicho-designer.tw1.ru/subproducts/get-by-id-list", json=params)
                 r = responses.json()
                 logger.info(r)
-                logger.info(r.text)
                 items = [ReturnProductSchema.model_validate(response) for response in r]
                 for i in range(0, len(items)):
                     items[i].subProductSizes = favorites[i+data.offset].size
