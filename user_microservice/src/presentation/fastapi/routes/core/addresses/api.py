@@ -1,10 +1,11 @@
 from uuid import UUID
 from dishka.integrations.fastapi import DishkaRoute
 from dishka.integrations.fastapi import FromDishka
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from fastapi import status
 from src.usecase.addresses.create import CreateAddressUsecase
 from src.usecase.addresses.get_all import GetAddressesUsecase
+from src.usecase.addresses.get import GetAddressUsecase
 from src.usecase.addresses.delete import DeleteAddressesUsecase
 from src.application.schemas.addresses import CreateAddressSchema, AddressSchema
 
@@ -16,11 +17,17 @@ async def create_address(
     address: CreateAddressSchema) -> AddressSchema:
     return await usecase(address)
 
-@ROUTER.get('', status_code=status.HTTP_200_OK, response_model=list[AddressSchema])
+@ROUTER.get('/all', status_code=status.HTTP_200_OK, response_model=list[AddressSchema])
 async def get_addresses_by_user(
     usecase: FromDishka[GetAddressesUsecase],) -> list[AddressSchema]:
     return await usecase()
 
+
+@ROUTER.get('', status_code=status.HTTP_200_OK, response_model=list[AddressSchema])
+async def get_address(
+    usecase: FromDishka[GetAddressUsecase],
+    id_address: UUID = Query()) -> AddressSchema:
+    return await usecase(id_address)
 
 @ROUTER.delete('', status_code=status.HTTP_200_OK, response_model=AddressSchema)
 async def delete_address_by_user(

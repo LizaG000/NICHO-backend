@@ -15,6 +15,20 @@ services:
       - ../user_microservice/src:/app/src:ro
       - ../user_microservice/src/infra/postgres/migration/versions:/app/src/infra/postgres/migration/versions:rw
 
+  orders:
+    build:
+      context: ..
+      dockerfile: ./deploy/Dockerfile
+    environment:
+      CONFIG_PATH: /app/configs/config.toml
+      USER_MICRO_HOST: 0.0.0.0
+      USER_MICRO_PORT: 8002
+    ports:
+      - "8002:8002"
+    volumes:
+      - ../order_microservice/src:/app/src:ro
+      - ../order_microservice/src/infra/postgres/migration/versions:/app/src/infra/postgres/migration/versions:rw
+
   database:
     image: postgres:15.2
     restart: always

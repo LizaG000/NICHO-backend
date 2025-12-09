@@ -14,6 +14,7 @@ from src.usecase.users.update import UpdateUserUsecase
 from src.usecase.users.get import GetUserUsecase
 from src.usecase.addresses.create import CreateAddressUsecase
 from src.usecase.addresses.get_all import GetAddressesUsecase
+from src.usecase.addresses.get import GetAddressUsecase
 from src.usecase.addresses.delete import DeleteAddressesUsecase
 from src.usecase.favorites.create import CreateFavoritesUsecase
 from src.usecase.favorites.get import GetFavoritesUsecase
@@ -52,5 +53,6 @@ class MainProvider(Provider):
         UpdateBasketUsecase,
         DeleteBasketUsecase,
         GetBasketUsecase,
+        GetAddressUsecase,
     )
 
