@@ -35,3 +35,14 @@ jobs:
           tags: |
             ghcr.io/lizag000/user_microservice/nicho:latest
             ${{ github.event_name == 'pull_request' && format('ghcr.io/lizag000/user_microservice/nicho:pr-{0}', github.event.number) || format('ghcr.io/lizag000/user_microservice/nicho:{0}', github.sha) }}
+
+      - name: Build and push Orders Microservice image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: deploy/orders.Dockerfile
+          push: true
+          tags: |
+            ghcr.io/lizag000/orders_microservice/nicho-orders:latest
+            ${{ github.event_name == 'pull_request' && format('ghcr.io/lizag000/orders_microservice/nicho-orders:pr-{0}', github.event.number) || format('ghcr.io/lizag000/user_microservice/nicho-orders:{0}', github.sha) }}
+          
