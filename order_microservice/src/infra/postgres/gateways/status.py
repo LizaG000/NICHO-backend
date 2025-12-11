@@ -21,5 +21,6 @@ class GetStatusGate(PostgresGateway):
         logger.info(result)
         if result is None:
             return None
+        logger.info(result)
         return StatusSchema.model_validate(result)
 

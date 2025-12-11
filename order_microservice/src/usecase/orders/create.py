@@ -8,6 +8,7 @@ from src.infra.postgres.tables import OrdersProductsModel, OrdersModel, StatusMo
 from src.application.schemas.orders import CreateOrderSchema, OrderSchema
 from src.application.schemas.order_products import CreateOrderProductSchema, OrderProductSchema
 from src.application.schemas.auth import AuthSchema
+from loguru import logger
 
 
 @dataclass(slots=True, frozen=True, kw_only=True)
@@ -21,16 +22,26 @@ class CreateOrderUsecase(Usecase[GetCreateOrderSchema, ReturnOrderSchema]):
     async def __call__(self, data: GetCreateOrderSchema) -> ReturnOrderSchema:
         async with self.session.begin():
             status = await self.get_status(data.status)
+
+            logger.info(1)
             price = 0
+            logger.info(status)
             for product in data.products:
                 price += product.price*product.count
+
+            logger.info(1)
             order = await self.create_order(CreateOrderSchema(
                 id_user=self.auth.sub,
                 id_address=data.id_address,
+                id_designer=data.id_designer,
                 id_status=status.id,
                 price=price
             ))
+
+            logger.info(order)
             products = []
+
+            logger.info(1)
             for product in data.products:
                 item = await self.create_order_product(
                     CreateOrderProductSchema(
@@ -45,6 +56,8 @@ class CreateOrderUsecase(Usecase[GetCreateOrderSchema, ReturnOrderSchema]):
 
                 products.append(item)
 
+
+            logger.info(1)
             return ReturnOrderSchema(
                 id=order.id,
                 id_user=order.id_user,
