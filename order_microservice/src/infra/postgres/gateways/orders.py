@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from loguru import logger
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
@@ -33,7 +32,6 @@ class GetOrdersAllGate(PostgresGateway):
             StatusModel.status,
         )).order_by(OrdersModel.created_at.desc())
         results = (await self.session.execute(stmt)).mappings().fetchall()
-        logger.info(results)
         return [ReturnAllOrders.model_validate(result) for result in results]
 
 
@@ -51,9 +49,7 @@ class GetOrderGate(PostgresGateway):
             OrdersModel.created_at
         ).join(StatusModel, OrdersModel.id_status==StatusModel.id)
         .where(OrdersModel.id==id_order))
-        logger.info(stmt)
         result = (await self.session.execute(stmt)).mappings().fetchone()
-        logger.info(result)
         if result is None:
             raise NotFoundError(OrdersModel.__tablename__)
         return ReturnAllOrders.model_validate(result)
