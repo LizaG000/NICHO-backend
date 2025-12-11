@@ -17,7 +17,7 @@ from src.usecase.orders.get import GetOrderUsecase
 
 ROUTER = APIRouter(route_class=DishkaRoute, tags=["Orders"])
 
-@ROUTER.post('', status_code=status.HTTP_200_OK, response_model=GetCreateOrderSchema)
+@ROUTER.post('', status_code=status.HTTP_200_OK, response_model=ReturnOrderSchema)
 async def create_users(
     usecase: FromDishka[CreateOrderUsecase],
     data: GetCreateOrderSchema) -> ReturnOrderSchema:
