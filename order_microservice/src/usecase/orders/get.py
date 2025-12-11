@@ -21,7 +21,7 @@ class GetOrderUsecase(Usecase[PaginationSchema, ReturnAllOrdersSchemas]):
 
     async def __call__(self, data: UUID) -> ReturnAllOrdersSchemas:
         async with self.session.begin():
-            order = await self.get_order(self.auth.sub)
+            order = await self.get_order(data)
             orders_products = await self.get_products(order.id)
             id_products = [str(product.id_product) for product in orders_products]
             async with httpx.AsyncClient(timeout=30.0) as client:
