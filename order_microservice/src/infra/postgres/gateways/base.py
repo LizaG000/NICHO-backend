@@ -100,8 +100,10 @@ class CreateReturningGate(Generic[TTable, TCreate, TEntity], PostgresGateway):
 
     async def __call__(self, entity: TCreate) -> TEntity:
         stmt = insert(self.table).values(**entity.model_dump()).returning(self.table)
+        print(stmt)
         try:
             result = (await self.session.execute(stmt)).scalar_one().__dict__
+            print(result)
             return self.schema_type.model_validate(result)
         except:
             raise DatabaseCreateError(self.table)
