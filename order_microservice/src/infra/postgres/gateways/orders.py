@@ -41,6 +41,8 @@ class GetOrdersAllGate(PostgresGateway):
 class GetOrderGate(PostgresGateway):
 
     async def __call__(self, id_order: UUID) -> ReturnAllOrders | None:
+        order_direct = await self.session.get(OrdersModel, id_order)
+        logger.info(f"1. Direct get OrdersModel: {order_direct}")
         stmt = (select(
             OrdersModel.id,
             OrdersModel.id_user,
