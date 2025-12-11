@@ -1,6 +1,6 @@
 from uuid import UUID
 from src.application.schemas.order_products import OrderProductSchema
-from datetime import datetime
+from datetime import datetime, timezone
 from pydantic import BaseModel, Field, field_validator
 
 class ReturnProduct(OrderProductSchema):
@@ -11,6 +11,7 @@ class ReturnProduct(OrderProductSchema):
 class ReturnAllOrdersSchemas(BaseModel):
     id: UUID
     id_user: UUID
+    id_designer: UUID
     address: dict | UUID
     price: float
     status: str
@@ -28,6 +29,7 @@ class CreateProductModel(BaseModel):
 class GetCreateOrderSchema(BaseModel):
     id_user: UUID
     id_address: UUID
+    id_designer: UUID
     status: str
     products: list[CreateProductModel]
 
@@ -35,6 +37,7 @@ class ReturnOrderSchema(BaseModel):
     id: UUID
     id_user: UUID
     id_address: UUID
+    id_designer: UUID
     price: float
     status: str
     created_at: datetime
@@ -44,6 +47,7 @@ class ReturnOrderSchema(BaseModel):
 class ReturnAllOrders(BaseModel):
     id: UUID
     id_user: UUID
+    id_designer: UUID
     address: dict | UUID
     price: float
     status: str
@@ -109,3 +113,8 @@ class ReturnProductSchema(BaseModel):
 
     class Config:
         populate_by_name = True
+
+class GetUpdateOrderSchema(BaseModel):
+    id: UUID
+    id_status: UUID
+    updated_at: datetime = datetime.now(timezone.utc)

@@ -48,6 +48,7 @@ class GetOrderUsecase(Usecase[PaginationSchema, ReturnAllOrdersSchemas]):
                 return ReturnAllOrdersSchemas(
                     id=order.id,
                     id_user=self.auth.sub,
+                    id_designer=order.id_designer,
                     address=address,
                     price=order.price,
                     status=order.status,

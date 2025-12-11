@@ -11,6 +11,8 @@ from src.config import DatabaseConfig
 from src.usecase.orders.create import CreateOrderUsecase
 from src.usecase.orders.get_all import GetAllOrderUsecase
 from src.usecase.orders.get import GetOrderUsecase
+from src.usecase.orders.update import UpdateOrderUsecase
+from src.usecase.status.get import GetStatusUsecase
 class MainProvider(Provider):
     scope = Scope.REQUEST
 
@@ -30,5 +32,7 @@ class MainProvider(Provider):
         CreateOrderUsecase,
         GetAllOrderUsecase,
         GetOrderUsecase,
+        UpdateOrderUsecase,
+        GetStatusUsecase,
     )
 

@@ -49,6 +49,7 @@ class CreateOrderUsecase(Usecase[GetCreateOrderSchema, ReturnOrderSchema]):
                 id=order.id,
                 id_user=order.id_user,
                 id_address=order.id_address,
+                id_designer=order.id_designer,
                 status=data.status,
                 price=price,
                 created_at=order.created_at,

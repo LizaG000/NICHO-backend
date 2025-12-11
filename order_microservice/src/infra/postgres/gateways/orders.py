@@ -20,15 +20,17 @@ class GetOrdersAllGate(PostgresGateway):
         stmt = (select(
             OrdersModel.id,
             OrdersModel.id_user,
+            OrdersModel.id_designer,
             OrdersModel.id_addresses.label("address"),
             OrdersModel.price,
             StatusModel.status,
             OrdersModel.created_at
         ).join(OrdersModel, OrdersModel.id_status==StatusModel.id)
-        .where(OrdersModel.id_user==id_user)
+        .where((OrdersModel.id_user == id_user) |
+            (OrdersModel.id_designer == id_user))
         .group_by(
             OrdersModel,
-        ))
+        )).order_by(OrdersModel.created_at.desc())
         results = (await self.session.execute(stmt)).mappings().fetchall()
         logger.info(results)
         return [ReturnAllOrders.model_validate(result) for result in results]
