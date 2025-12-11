@@ -17,6 +17,9 @@ class ProductSchema(BaseModel):
     categoryId: UUID
     category: str|None
 
+class DesignerSchema(BaseModel):
+    id: UUID
+    brandName:str
 
 
 
@@ -28,6 +31,7 @@ class ReturnProductSchema(BaseModel):
         validation_alias="subProductPhotos",
         default_factory=list
     )
+    user:DesignerSchema
     subProductSizes: list[dict] | str| None = None
 
     @field_validator('photos', mode='before')
