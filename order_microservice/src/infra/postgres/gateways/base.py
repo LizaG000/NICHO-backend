@@ -13,6 +13,7 @@ from src.application.errors import DatabaseCreateError
 from src.application.errors import DatabaseUpdateError
 from src.application.errors import DatabaseDeleteError
 from src.application.errors import NotFoundError
+from loguru import logger
 
 TAppliable = Select | ReturningInsert | ReturningUpdate
 
@@ -100,13 +101,15 @@ class CreateReturningGate(Generic[TTable, TCreate, TEntity], PostgresGateway):
 
     async def __call__(self, entity: TCreate) -> TEntity:
         stmt = insert(self.table).values(**entity.model_dump()).returning(self.table)
-        print(stmt)
-        try:
-            result = (await self.session.execute(stmt)).scalar_one().__dict__
-            print(result)
-            return self.schema_type.model_validate(result)
-        except:
-            raise DatabaseCreateError(self.table)
+        logger.info(stmt)
+        result = (await self.session.execute(stmt)).scalar_one().__dict__
+        logger.info(result)
+        return self.schema_type.model_validate(result)
+        # try:
+        #
+        #     return self.schema_type.model_validate(result)
+        # except:
+        #     raise DatabaseCreateError(self.table)
 
 
 @dataclass(slots=True, kw_only=True)
