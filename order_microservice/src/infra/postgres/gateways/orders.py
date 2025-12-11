@@ -52,12 +52,7 @@ class GetOrderGate(PostgresGateway):
         .where(OrdersModel.id==id_order)
         .group_by(
             OrdersModel.id,
-            OrdersModel.id_user,
-            OrdersModel.id_designer,
-            OrdersModel.id_address.label("address"),
-            OrdersModel.price,
             StatusModel.status,
-            OrdersModel.created_at,
         ))
         logger.info(stmt)
         result = (await self.session.execute(stmt)).mappings().fetchone()
