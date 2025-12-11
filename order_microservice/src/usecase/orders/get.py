@@ -25,7 +25,7 @@ class GetOrderUsecase(Usecase[PaginationSchema, ReturnAllOrdersSchemas]):
             order = await self.get_order(data)
             orders_products = await self.get_products(order.id)
             id_products = [str(product.id_product) for product in orders_products]
-            print(id_products)
+            logger.info(id_products)
             async with httpx.AsyncClient(timeout=30.0) as client:
                 products = await client.post("http://nicho-designer.tw1.ru/subproducts/get-by-id-list", json=id_products)
                 r = products.json()
