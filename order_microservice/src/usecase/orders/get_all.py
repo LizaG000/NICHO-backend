@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from src.application.schemas.auth import AuthSchema
 from src.application.errors import NotFoundError
 from src.infra.postgres.tables import OrdersModel
+from loguru import logger
 
 
 @dataclass(slots=True, frozen=True, kw_only=True)
@@ -18,12 +19,15 @@ class GetAllOrderUsecase(Usecase[PaginationSchema, ReturnOrdersPagination]):
     async def __call__(self, data: PaginationSchema) -> ReturnOrdersPagination:
         async with self.session.begin():
             orders = await self.get_orders(self.auth.sub)
+            logger.info(orders)
             if orders == []:
                 raise NotFoundError(OrdersModel.__tablename__)
             _next = data.offset + data.limit
+            logger.info(_next)
+
             if _next > len(orders):
                 _next = _next-len(orders)
-            response = orders[data.offset:next]
+            response = orders[data.offset:_next]
             if data.offset == 0:
                 limit_left = None
                 offset_left = None
