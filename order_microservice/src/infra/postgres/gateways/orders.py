@@ -64,6 +64,7 @@ class GetOrderGate(PostgresGateway):
             StatusModel.status,
             OrdersModel.created_at,
         ))
+        logger.info(stmt)
         result = (await self.session.execute(stmt)).mappings().fetchone()
         logger.info(result)
         if result is None:
