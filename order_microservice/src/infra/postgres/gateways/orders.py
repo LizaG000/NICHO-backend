@@ -16,7 +16,7 @@ class PostgresGateway:
 @dataclass(slots=True, kw_only=True)
 class GetOrdersAllGate(PostgresGateway):
 
-    async def __call__(self, id_user: UUID) -> list[ReturnAllOrders]:
+    async def __call__(self, id_user: UUID) -> list[ReturnAllOrders] | None:
         stmt = (select(
             OrdersModel.id,
             OrdersModel.id_user,
