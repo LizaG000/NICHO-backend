@@ -61,7 +61,7 @@ class NotFoundError(BaseError):
         table: str,
         status_code: int = status.HTTP_404_NOT_FOUND,
     ):
-        super().__init__(f"В {table.__tablename__} запись не найдена", status_code)
+        super().__init__(f"В {table} запись не найдена", status_code)
 
 
 class ForbiddenError(BaseError):
