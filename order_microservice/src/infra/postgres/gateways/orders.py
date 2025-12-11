@@ -44,6 +44,7 @@ class GetOrderGate(PostgresGateway):
         stmt = (select(
             OrdersModel.id,
             OrdersModel.id_user,
+            OrdersModel.id_designer,
             OrdersModel.price,
             OrdersModel.id_address.label("address"),
             StatusModel.status,
