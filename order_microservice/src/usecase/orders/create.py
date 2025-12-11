@@ -58,7 +58,7 @@ class CreateOrderUsecase(Usecase[GetCreateOrderSchema, ReturnOrderSchema]):
 
 
             logger.info(1)
-            return ReturnOrderSchema(
+            response = ReturnOrderSchema(
                 id=order.id,
                 id_user=order.id_user,
                 id_address=order.id_address,
@@ -69,5 +69,7 @@ class CreateOrderUsecase(Usecase[GetCreateOrderSchema, ReturnOrderSchema]):
                 updated_at=order.updated_at,
                 products=products
             )
+            logger.info(response)
+            return response
 
 
