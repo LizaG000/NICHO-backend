@@ -58,7 +58,7 @@ class OrdersModel(BaseDBModel):
         nullable=False,
         default=uuid.uuid4,
     )
-    id_addresses: Mapped[uuid.UUID] = mapped_column(
+    id_address: Mapped[uuid.UUID] = mapped_column(
         UUID,
         nullable=False
     )
