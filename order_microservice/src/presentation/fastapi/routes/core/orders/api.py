@@ -38,7 +38,7 @@ async def create_users(
     return await usecase(data=id_order)
 
 
-@ROUTER.get('', status_code=status.HTTP_200_OK, response_model=ReturnOrdersPagination)
+@ROUTER.put('', status_code=status.HTTP_200_OK, response_model=ReturnOrdersPagination)
 async def update_status(
     usecase: FromDishka[UpdateOrderUsecase],
     data: GetUpdateOrderSchema = Query()) -> OrderSchema:

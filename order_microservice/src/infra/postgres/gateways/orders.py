@@ -29,7 +29,13 @@ class GetOrdersAllGate(PostgresGateway):
         .where((OrdersModel.id_user == id_user) |
             (OrdersModel.id_designer == id_user))
         .group_by(
-            OrdersModel,
+            OrdersModel.id,
+            OrdersModel.id_user,
+            OrdersModel.id_designer,
+            OrdersModel.id_addresses.label("address"),
+            OrdersModel.price,
+            StatusModel.status,
+            OrdersModel.created_at,
         )).order_by(OrdersModel.created_at.desc())
         results = (await self.session.execute(stmt)).mappings().fetchall()
         logger.info(results)
@@ -50,7 +56,13 @@ class GetOrderGate(PostgresGateway):
         ).join(OrdersModel, OrdersModel.id_status==StatusModel.id)
         .where(OrdersModel.id==id_order)
         .group_by(
-            OrdersModel,
+            OrdersModel.id,
+            OrdersModel.id_user,
+            OrdersModel.id_designer,
+            OrdersModel.id_addresses.label("address"),
+            OrdersModel.price,
+            StatusModel.status,
+            OrdersModel.created_at,
         ))
         result = (await self.session.execute(stmt)).mappings().fetchone()
         logger.info(result)

@@ -10,6 +10,5 @@ ROUTER = APIRouter(route_class=DishkaRoute, tags=["Status"])
 
 @ROUTER.post('', status_code=status.HTTP_200_OK, response_model=StatusSchema)
 async def get_status(
-    usecase: FromDishka[GetStatusUsecase],
-    data: None) -> list[StatusSchema]:
-    return await usecase(data=data)
+    usecase: FromDishka[GetStatusUsecase]) -> list[StatusSchema]:
+    return await usecase(data=None)
