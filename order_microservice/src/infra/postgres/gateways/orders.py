@@ -48,7 +48,7 @@ class GetOrderGate(PostgresGateway):
             OrdersModel.id_address.label("address"),
             StatusModel.status,
             OrdersModel.created_at
-        ).join(OrdersModel, OrdersModel.id_status==StatusModel.id)
+        ).join(StatusModel, OrdersModel.id_status==StatusModel.id)
         .where(OrdersModel.id==id_order)
         .group_by(
             OrdersModel.id,
