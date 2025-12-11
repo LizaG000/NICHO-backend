@@ -49,11 +49,7 @@ class GetOrderGate(PostgresGateway):
             StatusModel.status,
             OrdersModel.created_at
         ).join(StatusModel, OrdersModel.id_status==StatusModel.id)
-        .where(OrdersModel.id==id_order)
-        .group_by(
-            OrdersModel.id,
-            StatusModel.status,
-        ))
+        .where(OrdersModel.id==id_order))
         logger.info(stmt)
         result = (await self.session.execute(stmt)).mappings().fetchone()
         logger.info(result)
