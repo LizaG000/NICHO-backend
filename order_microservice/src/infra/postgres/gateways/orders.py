@@ -21,7 +21,7 @@ class GetOrdersAllGate(PostgresGateway):
             OrdersModel.id,
             OrdersModel.id_user,
             OrdersModel.id_designer,
-            OrdersModel.id_addresses.label("address"),
+            OrdersModel.id_address.label("address"),
             OrdersModel.price,
             StatusModel.status,
             OrdersModel.created_at
@@ -32,7 +32,7 @@ class GetOrdersAllGate(PostgresGateway):
             OrdersModel.id,
             OrdersModel.id_user,
             OrdersModel.id_designer,
-            OrdersModel.id_addresses.label("address"),
+            OrdersModel.id_address.label("address"),
             OrdersModel.price,
             StatusModel.status,
             OrdersModel.created_at,
@@ -50,7 +50,7 @@ class GetOrderGate(PostgresGateway):
             OrdersModel.id,
             OrdersModel.id_user,
             OrdersModel.price,
-            OrdersModel.id_addresses.label("address"),
+            OrdersModel.id_address.label("address"),
             StatusModel.status,
             OrdersModel.created_at
         ).join(OrdersModel, OrdersModel.id_status==StatusModel.id)
@@ -59,7 +59,7 @@ class GetOrderGate(PostgresGateway):
             OrdersModel.id,
             OrdersModel.id_user,
             OrdersModel.id_designer,
-            OrdersModel.id_addresses.label("address"),
+            OrdersModel.id_address.label("address"),
             OrdersModel.price,
             StatusModel.status,
             OrdersModel.created_at,
