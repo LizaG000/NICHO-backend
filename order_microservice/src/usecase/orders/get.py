@@ -10,6 +10,7 @@ from src.application.schemas.common import PaginationSchema
 from src.usecase.orders.schemas import ReturnProductSchema, AddressSchema, ReturnProduct, ReturnAllOrdersSchemas
 from dataclasses import dataclass
 from src.application.schemas.auth import AuthSchema
+from loguru import  logger
 
 
 @dataclass(slots=True, frozen=True, kw_only=True)
@@ -27,6 +28,7 @@ class GetOrderUsecase(Usecase[PaginationSchema, ReturnAllOrdersSchemas]):
             async with httpx.AsyncClient(timeout=30.0) as client:
                 products = await client.post("http://nicho-designer.tw1.ru/subproducts/get-by-id-list", json=id_products)
                 r = products.json()
+                logger.info(r)
                 items = [ReturnProductSchema.model_validate(product) for product in r]
                 address = await client.get(f"http://nicho-user-micro.tw1.ru:8001/address?id_address={order.address}",)
                 address = address.json()
