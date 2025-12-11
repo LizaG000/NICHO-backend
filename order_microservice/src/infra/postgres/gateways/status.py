@@ -16,7 +16,7 @@ class GetStatusGate(PostgresGateway):
 
     async def __call__(self, name: str) -> StatusSchema | None:
         stmt = Select(*StatusModel.group_by_fields()).where(
-            StatusModel.name == name)
+            StatusModel.status == name)
         result = (await self.session.execute(stmt)).mappings().fetchone()
         logger.info(result)
         if result is None:
