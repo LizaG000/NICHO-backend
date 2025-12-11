@@ -66,6 +66,10 @@ class OrdersModel(BaseDBModel):
         UUID,
         nullable=False
     )
+    id_designer: Mapped[uuid.UUID] = mapped_column(
+        UUID,
+        nullable=False
+    )
     price: Mapped[float] = mapped_column(
         Float,
         nullable=False,

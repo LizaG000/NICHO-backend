@@ -7,6 +7,7 @@ class OrderSchema(BaseModel):
     id_user: UUID
     id_address: UUID
     id_status: UUID
+    id_designer: UUID
     status: str
     price: float
     created_at: datetime
@@ -16,5 +17,6 @@ class CreateOrderSchema(BaseModel):
     id_user: UUID
     id_address: UUID
     id_status: UUID
+    id_designer: UUID
     price: float
 

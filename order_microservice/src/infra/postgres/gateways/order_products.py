@@ -26,7 +26,9 @@ class GetProductsAllGate(PostgresGateway):
             OrdersProductsModel.discount,
             OrdersProductsModel.created_at,
             OrdersProductsModel.updated_at,
-        ).where(OrdersProductsModel.id_order==id_order))
+        ).where(OrdersProductsModel.id_order==id_order)
+        .order_by(OrdersProductsModel.created_at.desc()))
+
         results = (await self.session.execute(stmt)).mappings().fetchall()
         logger.info(results)
         return [OrderProductSchema.model_validate(result) for result in results]

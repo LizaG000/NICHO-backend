@@ -11,6 +11,7 @@ class ReturnProduct(OrderProductSchema):
 class ReturnAllOrdersSchemas(BaseModel):
     id: UUID
     id_user: UUID
+    id_designer: UUID
     address: dict | UUID
     price: float
     status: str
@@ -28,6 +29,7 @@ class CreateProductModel(BaseModel):
 class GetCreateOrderSchema(BaseModel):
     id_user: UUID
     id_address: UUID
+    id_designer: UUID
     status: str
     products: list[CreateProductModel]
 
@@ -35,6 +37,7 @@ class ReturnOrderSchema(BaseModel):
     id: UUID
     id_user: UUID
     id_address: UUID
+    id_designer: UUID
     price: float
     status: str
     created_at: datetime
@@ -44,6 +47,7 @@ class ReturnOrderSchema(BaseModel):
 class ReturnAllOrders(BaseModel):
     id: UUID
     id_user: UUID
+    id_designer: UUID
     address: dict | UUID
     price: float
     status: str
