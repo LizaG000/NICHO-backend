@@ -1,5 +1,5 @@
 from uuid import UUID
-from datetime import datetime, date
+from datetime import datetime, timezone
 from src.application.schemas.common import BaseModel
 
 class OrderSchema(BaseModel):
@@ -20,3 +20,7 @@ class CreateOrderSchema(BaseModel):
     id_designer: UUID
     price: float
 
+
+class UpdateOrderSchema(BaseModel):
+    id_status: UUID
+    updated_at: datetime = datetime.now(timezone.utc)
