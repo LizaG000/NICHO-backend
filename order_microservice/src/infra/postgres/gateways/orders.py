@@ -30,12 +30,7 @@ class GetOrdersAllGate(PostgresGateway):
             (OrdersModel.id_designer == id_user))
         .group_by(
             OrdersModel.id,
-            OrdersModel.id_user,
-            OrdersModel.id_designer,
-            OrdersModel.id_address.label("address"),
-            OrdersModel.price,
             StatusModel.status,
-            OrdersModel.created_at,
         )).order_by(OrdersModel.created_at.desc())
         results = (await self.session.execute(stmt)).mappings().fetchall()
         logger.info(results)
