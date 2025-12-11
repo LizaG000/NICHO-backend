@@ -8,7 +8,6 @@ class OrderSchema(BaseModel):
     id_address: UUID
     id_status: UUID
     id_designer: UUID
-    status: UUID
     price: float
     created_at: datetime
     updated_at: datetime
