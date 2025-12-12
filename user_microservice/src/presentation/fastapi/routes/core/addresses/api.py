@@ -23,7 +23,7 @@ async def get_addresses_by_user(
     return await usecase()
 
 
-@ROUTER.get('', status_code=status.HTTP_200_OK, response_model=list[AddressSchema])
+@ROUTER.get('', status_code=status.HTTP_200_OK, response_model=AddressSchema)
 async def get_address(
     usecase: FromDishka[GetAddressUsecase],
     id_address: UUID = Query()) -> AddressSchema:
