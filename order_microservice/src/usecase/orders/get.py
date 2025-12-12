@@ -37,8 +37,8 @@ class GetOrderUsecase(Usecase[PaginationSchema, ReturnAllOrdersSchemas]):
                 address = address.json()
                 address =AddressSchema.model_validate(address)
                 response = [ReturnProduct(
-                    id=items[i].id,
-                    id_product=items[i].id_products,
+                    id=orders_products[i].id,
+                    id_product=items[i].productId,
                     id_order=order.id,
                     price=orders_products[i].price,
                     count=orders_products[i].count,
