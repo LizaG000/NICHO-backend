@@ -31,7 +31,7 @@ class GetOrderUsecase(Usecase[PaginationSchema, ReturnAllOrdersSchemas]):
                 r = products.json()
                 logger.info(r)
                 items = [ReturnProductSchema.model_validate(product) for product in r]
-                address = await client.get(f"http://nicho-user-micro.tw1.ru:8001/address?id_address={order.address}",)
+                address = await client.get(f"http://nicho-user-micro.tw1.ru:8001/api/address?id_address={order.address}",)
                 address = address.json()
                 address =AddressSchema.model_validate(address)
                 response = [ReturnProduct(
