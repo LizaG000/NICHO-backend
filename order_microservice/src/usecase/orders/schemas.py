@@ -8,15 +8,6 @@ class ReturnProduct(OrderProductSchema):
     photos: list[str]
 
 
-class ReturnAllOrdersSchemas(BaseModel):
-    id: UUID
-    id_user: UUID
-    id_designer: UUID
-    address: dict | UUID
-    price: float
-    status: str
-    created_at: datetime
-    products: list[ReturnProduct]
 
 class CreateProductModel(BaseModel):
     id_product: UUID
@@ -118,3 +109,14 @@ class GetUpdateOrderSchema(BaseModel):
     id: UUID
     id_status: UUID
     updated_at: datetime = datetime.now(timezone.utc)
+
+
+class ReturnAllOrdersSchemas(BaseModel):
+    id: UUID
+    id_user: UUID
+    id_designer: UUID
+    address: AddressSchema | UUID
+    price: float
+    status: str
+    created_at: datetime
+    products: list[ReturnProduct]
