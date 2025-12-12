@@ -31,14 +31,14 @@ async def create_users(
     return await usecase(data=data)
 
 
-@ROUTER.get('', status_code=status.HTTP_200_OK, response_model=ReturnOrdersPagination)
+@ROUTER.get('', status_code=status.HTTP_200_OK, response_model=ReturnAllOrdersSchemas)
 async def create_users(
     usecase: FromDishka[GetOrderUsecase],
     id_order: UUID = Query()) -> ReturnAllOrdersSchemas:
     return await usecase(data=id_order)
 
 
-@ROUTER.put('', status_code=status.HTTP_200_OK, response_model=ReturnOrdersPagination)
+@ROUTER.put('', status_code=status.HTTP_200_OK, response_model=OrderSchema)
 async def update_status(
     usecase: FromDishka[UpdateOrderUsecase],
     data: GetUpdateOrderSchema = Query()) -> OrderSchema:
