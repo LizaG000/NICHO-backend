@@ -30,8 +30,10 @@ class GetOrderUsecase(Usecase[PaginationSchema, ReturnAllOrdersSchemas]):
                 products = await client.post("http://nicho-designer.tw1.ru/subproducts/get-by-id-list", json=id_products)
                 r = products.json()
                 logger.info(r)
+                headers = {}
+                headers["Authorization"] = f"Bearer {self.auth.token}"
                 items = [ReturnProductSchema.model_validate(product) for product in r]
-                address = await client.get(f"http://nicho-user-micro.tw1.ru:8001/api/address?id_address={order.address}",)
+                address = await client.get(f"http://nicho-user-micro.tw1.ru:8001/api/address?id_address={order.address}", headers=headers)
                 address = address.json()
                 address =AddressSchema.model_validate(address)
                 response = [ReturnProduct(
