@@ -39,6 +39,8 @@ class TokenProcessor:
 
             decoded_bytes = base64.urlsafe_b64decode(payload_b64)
             payload_dict = json.loads(decoded_bytes)
+            payload_dict[token] = token
+            logger.info(payload_dict)
 
             return AuthSchema.model_validate(payload_dict)
 
